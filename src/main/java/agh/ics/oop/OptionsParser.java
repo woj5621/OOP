@@ -11,6 +11,7 @@ public class OptionsParser {
         for(int i=0; i<arr.length; i++)
         {
             switch(arr[i]){
+
                 case "f", "forward" -> directionArray[i] = (MoveDirection.FORWARD);
                 case "b", "backward" -> directionArray[i] = (MoveDirection.BACKWARD);
                 case "r", "right" -> directionArray[i] = (MoveDirection.RIGHT);
