@@ -10,7 +10,7 @@ public class GrassFieldTest {
     @Test
     public void placeTest(){
 
-        IWorldMap map = new GrassField(10);
+        AbstractWorldMap map = new GrassField(10);
         Animal animal = new Animal(map, new Vector2d(2,3));
         map.place(animal);
         assertTrue(map.isOccupied(animal.getPosition()));
@@ -20,7 +20,7 @@ public class GrassFieldTest {
     public void engineTest(){
         String[] args ={"r", "r", "f", "f"};
         MoveDirection[] directions = new OptionsParser().parse(args);
-        IWorldMap map = new GrassField(10);
+        AbstractWorldMap map = new GrassField(10);
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();

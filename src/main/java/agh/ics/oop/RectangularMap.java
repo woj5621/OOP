@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RectangularMap extends AbstractWorldMap implements IWorldMap {
+public class RectangularMap extends AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     private final int width;
     private final int height;
 
@@ -24,6 +24,8 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
     public boolean canMoveTo(Vector2d position) {
         return position.precedes(new Vector2d(width - 1, height - 1)) && position.follows(new Vector2d(0, 0)) && !isOccupied(position);
     }
+
+
 
 //    @Override
 //    public boolean place(Animal animal) {
@@ -51,4 +53,6 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap {
     public String toString(){
         return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(this.width, this.height));
     }
+
+
 }
