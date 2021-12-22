@@ -7,17 +7,17 @@ import java.util.List;
 public class GrassField extends AbstractWorldMap implements IWorldMap, IPositionChangeObserver{
 
     protected int grassNumber;
-    protected int max_width;
-    protected int max_height;
+    protected int maxWidth;
+    protected int maxHeight;
     private final MapVisualizer mapVisualizer;
     //protected List<Grass> grassList = new ArrayList<>();
     LinkedHashMap<Vector2d, Grass> grassHashMap = new LinkedHashMap<>();
 
     public GrassField(int grassNumber){
         this.grassNumber=grassNumber;
-        this.max_width = 10;
-        this.max_height = 5;
-        this.animalMap = new Animal[max_width][max_height];
+        this.maxWidth = 10;
+        this.maxHeight =5;
+        this.animalMap = new Animal[maxWidth][maxHeight];
         mapVisualizer = new MapVisualizer(this);
 
         placeGrass();
@@ -35,12 +35,15 @@ public class GrassField extends AbstractWorldMap implements IWorldMap, IPosition
                 x = (int)(Math.random()*(Math.sqrt(this.grassNumber*10)));
                 y = (int)(Math.random()*(Math.sqrt(this.grassNumber*10)));
             }
-            this.max_width = Math.max(this.max_width, x);
-            this.max_height = Math.max(this.max_height, y);
-
 
             Grass grass = new Grass(new Vector2d(x, y));
             grassHashMap.put(grass.getPosition(), grass);
+
+            this.mapBoundary.xSorted.add(grass.getPosition());
+            this.mapBoundary.ySorted.add(grass.getPosition());
+
+            this.maxWidth = this.mapBoundary.xSorted.last().x;
+            this.maxHeight =this.mapBoundary.ySorted.last().y;
             //grassList.add(grass);
         }
 
@@ -81,10 +84,6 @@ public class GrassField extends AbstractWorldMap implements IWorldMap, IPosition
     public boolean canMoveTo(Vector2d position) {
         if(position.follows(new Vector2d(0, 0))){
             if(isOccupied(position) && objectAt(position) instanceof Grass) {
-                if (position.precedes(new Vector2d(max_width - 1, max_height - 1))) {
-                    if (position.x > max_width) max_width = position.x;
-                    if (position.y > max_height) max_height = position.y;
-                }
                 this.grassHashMap.remove(position);
             }
             else return !isOccupied(position) || !(objectAt(position) instanceof Animal);
@@ -111,7 +110,16 @@ public class GrassField extends AbstractWorldMap implements IWorldMap, IPosition
 
     @Override
     public String toString(){
-        return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(this.max_width, this.max_height));
+        return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(this.maxWidth, this.maxHeight));
+    }
+
+    public Vector2d getLowerLeft(){
+        return this.mapBoundary.lowerLeft();
+    }
+
+    public Vector2d getUpperRight(){
+        return this.mapBoundary.upperRight();
+
     }
 
 

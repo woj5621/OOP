@@ -15,6 +15,7 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
 //    protected HashMap<Vector2d, Grass> grassFields = new HashMap<>();
     public Animal[][] animalMap;
     LinkedHashMap<Vector2d, Animal> animalHashMap = new LinkedHashMap<>();
+    protected MapBoundary mapBoundary = new MapBoundary();
 
     @Override
     public boolean canMoveTo(Vector2d position){
@@ -30,10 +31,12 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
             //animalMap[animal.getPosition().x][animal.getPosition().y] = animal;
 
             animalHashMap.put(animal.getPosition(), animal);
+            this.mapBoundary.xSorted.add(animal.getPosition());
+            this.mapBoundary.ySorted.add(animal.getPosition());
 
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Cannot access position:" + animal.getPosition().toString());
     }
 
 
@@ -80,6 +83,10 @@ public abstract class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         Animal animal = animalHashMap.remove(oldPosition);
         animalHashMap.put(newPosition, animal);
     }
+
+    public abstract  Vector2d getLowerLeft();
+
+    public abstract Vector2d getUpperRight();
 
 
 }

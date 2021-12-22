@@ -54,5 +54,15 @@ public class RectangularMap extends AbstractWorldMap implements IWorldMap, IPosi
         return mapVisualizer.draw(new Vector2d(0, 0), new Vector2d(this.width, this.height));
     }
 
+    @Override
+    public Vector2d getLowerLeft() {
+        return this.mapBoundary.lowerLeft();
+    }
+
+    @Override
+    public Vector2d getUpperRight() {
+        return this.mapBoundary.upperRight();
+    }
+
 
 }

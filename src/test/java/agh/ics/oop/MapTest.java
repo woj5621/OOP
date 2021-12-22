@@ -18,14 +18,32 @@ public class MapTest {
 
     @Test
     public void engineTest(){
-        String[] args ={"f", "b", "r", "l", "f", "f", "r", "r","f",  "f", "f", "f", "f", "f", "f", "f"};
+        String[] args ={"r", "f", "r", "f"};
         MoveDirection[] directions = new OptionsParser().parse(args);
-        AbstractWorldMap map = new RectangularMap(10, 5);
+        AbstractWorldMap map = new RectangularMap(10, 7);
         Vector2d[] positions = { new Vector2d(2,2), new Vector2d(3,4) };
         IEngine engine = new SimulationEngine(directions, map, positions);
         engine.run();
-        assertTrue(map.isOccupied(new Vector2d(1,4)));
-        assertTrue(map.isOccupied(new Vector2d(4,0)));
+        System.out.println(map);
+        assertTrue(map.isOccupied(new Vector2d(2,2)));
+        assertTrue(map.isOccupied(new Vector2d(3,6)));
+    }
+
+    @Test
+    public void exceptionsTest() {
+        try{
+            String[] args ={"r", "f", "r", "f", "w"};
+            MoveDirection[] directions = new OptionsParser().parse(args);
+            AbstractWorldMap map = new RectangularMap(10, 7);
+            Vector2d[] positions = { new Vector2d(2,2), new Vector2d(2,2) };
+            IEngine engine = new SimulationEngine(directions, map, positions);
+            engine.run();
+            System.out.println(map);
+        }catch (IllegalArgumentException ex){
+            System.out.println(ex.getMessage());
+
+        }
+
     }
 
 
