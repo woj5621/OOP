@@ -1,19 +1,25 @@
 package agh.ics.oop;
 
-public class Grass {
+public class Grass implements  IMapElement{
     private Vector2d position;
 
     public Grass(Vector2d position){
         this.position = position;
     }
 
-    Vector2d getPosition(){
+    @Override
+    public Vector2d getPosition(){
         return this.position;
     }
 
     @Override
     public String toString(){
         return "*";
+    }
+
+    @Override
+    public String getUrl() {
+        return "src/main/resources/grass.png";
     }
 
 

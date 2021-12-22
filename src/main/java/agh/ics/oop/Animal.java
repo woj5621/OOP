@@ -3,7 +3,7 @@ package agh.ics.oop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Animal {
+public class Animal implements IMapElement {
     private Vector2d position;
     private MapDirection orientation;
     private AbstractWorldMap map;
@@ -43,7 +43,6 @@ public class Animal {
             case LEFT -> this.orientation = orientation.previous();
             case FORWARD -> {
                 Vector2d newPosition = position.add(this.orientation.toUnitVector());
-
                 if(this.map.canMoveTo(newPosition))
                 {
 
@@ -89,6 +88,18 @@ public class Animal {
             o.positionChange(oldPosition, newPosition);
 
         }
+    }
+
+    @Override
+    public String getUrl() {
+        String url = "";
+        switch(this.toString()){
+            case "N" -> url = "src/main/resources/up.png";
+            case "E" -> url = "src/main/resources/right.png";
+            case "S" -> url = "src/main/resources/down.png";
+            case "W" -> url = "src/main/resources/left.png";
+        }
+        return url;
     }
 
 }
